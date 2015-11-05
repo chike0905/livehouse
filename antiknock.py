@@ -18,7 +18,12 @@ for event_ttl in event_ttls:
     artists = event_ttl.find("div",class_="artist_text")
     if artists is not None:
       artist = artists.get_text(strip=True)
+      artist_lists = artist.split("/")
 
-      event[title] = artist
+      artist_list = []
+      for artist_name in artist_lists:
+        artist_list.append(artist_name.strip())
+
+      event[title] = artist_list
 
 print json.dumps(event,ensure_ascii=False,indent=4)
