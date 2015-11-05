@@ -10,13 +10,14 @@ html = urllib2.urlopen(u"http://www.antiknock.net/schedule/")
 soup = BeautifulSoup(html,"html.parser")
 
 event_ttls = soup.find_all("div",class_="sche_box_right")
-event = {}
+events = []
 for event_ttl in event_ttls:
   event_title = event_ttl.find("div",class_="sche_event_ttl")
   if event_title.a is not None:
     title = event_ttl.a.get_text(strip=True)
     artists = event_ttl.find("div",class_="artist_text")
     if artists is not None:
+      event = {}
       artist = artists.get_text(strip=True)
       artist_lists = artist.split("/")
 
@@ -24,6 +25,8 @@ for event_ttl in event_ttls:
       for artist_name in artist_lists:
         artist_list.append(artist_name.strip())
 
-      event[title] = artist_list
+      event["title"] = title
+      event["artist"] = artist_list
+      events.append(event)
 
-print json.dumps(event,ensure_ascii=False,indent=4)
+print json.dumps(events,ensure_ascii=False,indent=4)
