@@ -29,4 +29,24 @@ for event_ttl in event_ttls:
       event["artist"] = artist_list
       events.append(event)
 
-print json.dumps(events,ensure_ascii=False,indent=4)
+#以下データ整形
+artists = []
+for event in events:
+  for artist in event["artist"]:
+    #すでにartistsに情報があるか判定
+    if artist not in artists:
+      w_artist = []
+      #artistが出てるイベントを抽出
+      for eventdata in events:
+        if artist in eventdata["artist"]:
+          #出ているイベントの全出演者を追加
+          for artistname in eventdata["artist"]:
+            if artist not in artistname:
+              w_artist.append(artistname)
+      artistdata = {}
+      artistdata["name"] = artist
+      artistdata["network"] = w_artist
+      artists.append(artistdata)
+
+
+print json.dumps(artists,ensure_ascii=False,indent=4)
