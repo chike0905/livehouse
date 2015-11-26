@@ -32,10 +32,14 @@ def eventjson(html):
   return events
 
 events = []
-#スクレイピングするURLを指定
-#HTML取得,soupオブジェクト生成
-html = urllib2.urlopen(u"http://www.antiknock.net/schedule/")
-events = events + eventjson(html)
+
+#antiknockの2月以前が取得できないため3~12月に設定
+for i in range(3,12):
+  #スクレイピングするURLを指定
+  #HTML取得,soupオブジェクト生成
+  url = u"http://www.antiknock.net/schedule/2015/" + str(i)
+  html = urllib2.urlopen(url)
+  events = events + eventjson(html)
 
 
 '''
@@ -90,7 +94,8 @@ for artist in artist_list:
     if artistdata["name"] is artist:
       #networkが存在するartist毎に処理
       for w_artists in artistdata["network"].keys():
-        G.add_edge(artist,w_artists,weight=artistdata["network"][w_artists])
+        if artistdata["network"][w_artists] > 1:
+          G.add_edge(artist,w_artists,weight=artistdata["network"][w_artists])
 
 
 #レイアウトの最適化
