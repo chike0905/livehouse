@@ -53,16 +53,5 @@ for event in events:
       artistdata["name"] = artist
       artistdata["network"] = network
       artists.append(artistdata)
-      """
-          #出ているイベントの全出演者を追加
-          for artistname in eventdata["artist"]:
-            if artist not in artistname:
-              w_artists.append(artistname)
-      network = {}
-      for artist in w_artists:
-        if artist not in network:
-          network[artist] = w_artists.count(artist)
-
-      """
 
 print json.dumps(artists,ensure_ascii=False,indent=4)
