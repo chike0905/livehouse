@@ -5,8 +5,9 @@ import networkx as nx
 import pylab
 import matplotlib.pyplot as plt
 import scraping as sc
+import time
 
-
+start_t = time.clock()
 events = []
 
 #antiknockの2月以前が取得できないため3~12月に設定
@@ -16,12 +17,12 @@ for i in range(3,12):
   url = u"http://www.antiknock.net/schedule/2015/" + str(i)
   html = urllib2.urlopen(url)
   events = events + sc.antiknock(html)
-
+anti_time = time.clock()
 for i in range(1,10):
   url = u"http://www.shibuyathegame.com/2015_"+ str(i) +".html"
   html = urllib2.urlopen(url)
   events = events + sc.thegame(html)
-
+game_time = time.clock()
 '''
 以下データ整形
 arttist_list = ["バンド名"]
@@ -58,6 +59,7 @@ for event in events:
         artistdata["name"] = artist
         artistdata["network"] = network
         artists.append(artistdata)
+format_time = time.clock()
 
 #グラフオブジェクトの作成
 G = nx.Graph()
@@ -77,6 +79,9 @@ for artist in artist_list:
         if artistdata["network"][w_artists] > 1:
           G.add_edge(artist,w_artists,weight=artistdata["network"][w_artists])
 
+for artist in artist_list:
+  if len(G.neighbors(artist)) == 0:
+    G.remove_node(artist)
 
 #レイアウトの最適化
 pos = nx.spring_layout(G)
@@ -85,5 +90,14 @@ nx.draw_networkx_nodes(G, pos, node_size=200, node_color="w")
 nx.draw_networkx_edges(G, pos, width=2)
 nx.draw_networkx_labels(G, pos ,font_size=8, font_color="r")
 
+network_time = time.clock()
+
 # 表示
-plt.show()
+#plt.show()
+plt.pause(.01)
+graph_time = time.clock()
+print "time for scraping by antiknock is " + str(anti_time - start_t) + "sec"
+print "time for scraping by the game is " + str(game_time - anti_time) + "sec"
+print "time for data format is " + str(format_time - game_time) + "sec"
+print "time for making graph is " + str(network_time - format_time) + "sec"
+print "time for show graph is " + str(graph_time - network_time - 0.01) + "sec"
