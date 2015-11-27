@@ -18,6 +18,7 @@ for i in range(3,12):
   html = urllib2.urlopen(url)
   events = events + sc.antiknock(html)
 anti_time = time.clock()
+#game11月以降のフォーマットが異なるため暫定的に1~10月
 for i in range(1,10):
   url = u"http://www.shibuyathegame.com/2015_"+ str(i) +".html"
   html = urllib2.urlopen(url)
@@ -76,8 +77,8 @@ for artist in artist_list:
     if artistdata["name"] is artist:
       #networkが存在するartist毎に処理
       for w_artists in artistdata["network"].keys():
-        if artistdata["network"][w_artists] > 1:
-          G.add_edge(artist,w_artists,weight=artistdata["network"][w_artists])
+#        if artistdata["network"][w_artists] > 1:
+        G.add_edge(artist,w_artists,weight=artistdata["network"][w_artists])
 
 for artist in artist_list:
   if len(G.neighbors(artist)) == 0:
@@ -93,11 +94,9 @@ nx.draw_networkx_labels(G, pos ,font_size=8, font_color="r")
 network_time = time.clock()
 
 # 表示
-#plt.show()
-plt.pause(.01)
-graph_time = time.clock()
+plt.show()
+
 print "time for scraping by antiknock is " + str(anti_time - start_t) + "sec"
 print "time for scraping by the game is " + str(game_time - anti_time) + "sec"
 print "time for data format is " + str(format_time - game_time) + "sec"
 print "time for making graph is " + str(network_time - format_time) + "sec"
-print "time for show graph is " + str(graph_time - network_time - 0.01) + "sec"
