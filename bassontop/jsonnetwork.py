@@ -2,8 +2,6 @@
 import json
 import time
 import networkx as nx
-import pylab
-import matplotlib.pyplot as plt
 
 from IPython import embed
 from IPython.terminal.embed import InteractiveShellEmbed
