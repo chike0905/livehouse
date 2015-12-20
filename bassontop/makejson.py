@@ -33,6 +33,8 @@ livehouses = [
     u"http://vijon.jp/",
     u"http://deepa.jp/"
     ]
+#スクレイピング及びjsonの生成
+#期間はここで指定
 for livehouse in livehouses:
   for i in range(1,12):
     url = livehouse + u"live.html?y=2015&m=" + str(i)
