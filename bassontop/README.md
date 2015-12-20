@@ -8,12 +8,13 @@ BASS ON TOPグループは主に大阪と東京にライブハウスやスタジ
 * 心斎橋VARON
 * 梅田Zeela
 * 大塚Deepa
-* 吉祥寺CLUB SEATA
+* 吉祥寺CLUB SEATA  
 を最大5年分スクレイピングして分析を加える.
 
 各ファイル説明
 ----
-* makejson.py
+
+* makejson.py  
 JSONファイルの生成
-* jsonnetwork.py
+* jsonnetwork.py  
 JSONファイルを読み込み,Networkxによってグラフオブジェクトを生成したのちIPythonを起動
