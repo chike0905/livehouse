@@ -8,6 +8,8 @@ import networkx as nx
 import pylab
 import matplotlib.pyplot as plt
 
+from IPython import embed
+from IPython.terminal.embed import InteractiveShellEmbed
 
 def scraping(html):
   events = []
@@ -39,6 +41,8 @@ livehouses = [
     u"http://vijon.jp/",
     u"http://deepa.jp/"
     ]
+
+#1年分のデータを収集
 for livehouse in livehouses:
   for i in range(1,12):
     url = livehouse + u"live.html?y=2015&m=" + str(i)
@@ -100,27 +104,15 @@ for artist in artist_list:
     if artistdata["name"] is artist:
       #networkが存在するartist毎に処理
       for w_artists in artistdata["network"].keys():
-        if artistdata["network"][w_artists] > 1:
-          G.add_edge(artist,w_artists,weight= 10 / artistdata["network"][w_artists])
+        G.add_edge(artist,w_artists,weight= 10 / artistdata["network"][w_artists])
 
 for artist in artist_list:
-  if len(G.neighbors(artist)) < 1:
+  if len(G.neighbors(artist)) is 0:
     G.remove_node(artist)
 
-#レイアウトの最適化
-pos = nx.spring_layout(G)
-
-nx.draw_networkx_nodes(G, pos, node_size=200, node_color="w")
-nx.draw_networkx_edges(G, pos, width=2)
-nx.draw_networkx_labels(G, pos ,font_size=8, font_color="r")
-
 network_time = time.clock()
-
-degree = nx.degree(G)
-
-# 表示
-plt.show()
 
 print "time for scraping  is " + str(scraping_t - start_t) + "sec"
 print "time for data format is " + str(format_time - scraping_t) + "sec"
 print "time for making graph is " + str(network_time - format_time) + "sec"
+embed()
