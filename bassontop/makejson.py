@@ -41,7 +41,7 @@ for livehouse in livehouses:
     html = urllib2.urlopen(url)
     events = events + scraping(html)
 
-scraping_t = time.clock()
+
 
 '''
 データ整形
@@ -60,9 +60,8 @@ for event in events:
     #artist名が長すぎるものを弾く
     if len(artist) < 50:
       #すでにartistsに情報があるか判定
-      if artist not in artists:
-        if artist not in artist_list:
-          artist_list.append(artist)
+      if artist not in artist_list:
+        artist_list.append(artist)
         w_artists = []
         #artistが出てるイベントを抽出
         for eventdata in events:
@@ -79,6 +78,9 @@ for event in events:
         artistdata["name"] = artist
         artistdata["network"] = network
         artists.append(artistdata)
+
+with open('event.json', 'w') as f:
+  json.dump(events, f, sort_keys=True, indent=4)
 with open('artistnetwork.json', 'w') as f:
   json.dump(artists, f, sort_keys=True, indent=4)
 with open('artist_list.json', 'w') as f:

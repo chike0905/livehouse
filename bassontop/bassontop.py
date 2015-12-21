@@ -89,6 +89,12 @@ for event in events:
         artists.append(artistdata)
 format_time = time.clock()
 
+#データのjsonを出力
+with open('artistnetwork.json', 'w') as f:
+  json.dump(artists, f, sort_keys=True, indent=4)
+with open('artist_list.json', 'w') as f:
+  json.dump(artist_list, f, sort_keys=True, indent=4)
+
 #グラフオブジェクトの作成
 G = nx.Graph()
 

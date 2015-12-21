@@ -7,9 +7,9 @@ from IPython import embed
 from IPython.terminal.embed import InteractiveShellEmbed
 
 #jsonの読み込み
-with open('2015artists.json', 'r') as f:
+with open('artist_list.json', 'r') as f:
   artist_list = json.load(f)
-with open('2015network.json', 'r') as f:
+with open('artistnetwork.json', 'r') as f:
   artists = json.load(f)
 
 #グラフオブジェクトの作成
