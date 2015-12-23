@@ -68,9 +68,8 @@ for event in events:
     #artist名が長すぎるものを弾く
     if len(artist) < 50:
       #すでにartistsに情報があるか判定
-      if artist not in artists:
-        if artist not in artist_list:
-          artist_list.append(artist)
+      if artist not in artist_list:
+        artist_list.append(artist)
         w_artists = []
         #artistが出てるイベントを抽出
         for eventdata in events:
